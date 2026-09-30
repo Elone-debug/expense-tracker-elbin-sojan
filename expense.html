@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Expense Tracker</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <!-- Custom CSS -->
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-xl py-3">
+
+        <!-- navbar -->
+
+        <nav class="navbar navbar-expand-md bg-white rounded-4 shadow-sm px-3 mb-3">
+            <a class="navbar-brand logo" href="#top"> Expense Tracker</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#top">Dashboard </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active " href="#transactions">Transactions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#summary">Summary</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- SUMMARY CARDS  -->
+
+        <section class="row g-3 mb-3" id="top">
+
+            <!-- Income -->
+
+            <div class="col-12 col-md-4">
+                <div class="card stat h-100 p-3 flex-row align-items-center gap-3">
+                    <div class="ic g"><i class="bi bi-cash-coin"></i></div>
+                    <div>
+                        <small>Total Income</small>
+                        <b id="tIncome">₹0.00</b>
+                        <span class="sub" id="sIncome"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!--  Expenses -->
+
+            <div class="col-12 col-md-4">
+                <div class="card stat h-100 p-3 flex-row align-items-center gap-3">
+                    <div class="ic r"> <i class="bi bi-receipt"></i></div>
+                    <div>
+                        <small>Total Expenses</small>
+                        <b id="tExpense"> ₹0.00</b>
+                        <span class="sub" id="sExpense"></span>
+                    </div>
+                </div>
+            </div>
+            <!--  Balance -->
+            <div class="col-12 col-md-4">
+                <div class="card stat h-100 p-3 flex-row align-items-center gap-3">
+                    <div class="ic b"><i class="bi bi-wallet"></i></div>
+                    <div>
+                        <small> Current Balance</small>
+                        <b id="tBalance"> ₹0.00</b>
+                        <span class="sub" id="sBalance"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--  DASHBOARD SECTION  -->
+        <section class="row g-3 mb-3">
+
+            <!--  EXPENSE OVERVIEW  -->
+
+            <div class="col-12 col-lg-6 col-xl-4" id="summary">
+                <div class="card over h-100 p-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h2 class="m-0"> Expense Overview</h2>
+                        <select id="period" class="form-select form-select-sm">
+                            <option value="month"> This Month</option>
+                            <option value="all">All Time</option>
+                        </select>
+                    </div>
+                    <!-- Empty Overview -->
+                    <div id="ovEmpty" class="empty-box flex-grow-1 d-none d-flex flex-column justify-content-center">
+                       <!-- icon -->
+                        <span class="big"> <i class="bi bi-pie-chart-fill"></i></span>
+                        <span id="ovMsg"></span>
+                    </div>
+                    <!-- Overview Data -->
+                    <div id="ovData" class="flex-grow-1 d-flex flex-column justify-content-between">
+                        <div class="d-flex flex-wrap gap-3 align-items-center justify-content-center my-3 flex-grow-1">
+                            <div class="donut" id="donut">
+                                <span id="pct"> 0%</span>
+                            </div>
+                            <div class="legend" id="legend"></div>
+                        </div>
+
+                        <div class="budget mt-2" id="budgetBtn">
+                            <b id="spent"> ₹0.00</b>
+                            <small id="budgetTxt"></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- MONTHLY TREND  -->
+            <div class="col-12 col-lg-6 col-xl-4">
+                <div class="card h-100 p-3">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+                        <h2 class="m-0"> Monthly Trend</h2>
+                        <small class="text-secondary">
+                            <span class="dot" style="background:var(--green)"></span>
+                            Income
+                            <span class="dot ms-2" style="background:#ff7b95"></span>
+                            Expense
+                        </small>
+                    </div>
+                    <!-- Empty Trend -->
+                    <div id="trEmpty" class="empty-box flex-grow-1 d-none d-flex flex-column justify-content-center">
+                        <span class="big">
+                            <!-- icon -->
+                            <i class="bi bi-bar-chart-line-fill"></i> 
+                        </span>
+                        No transactions yet.
+                        <br>
+                        Your income vs expense trend
+                        will appear here.
+                    </div>
+                    <!-- Trend Data -->
+                    <div id="trData" class="flex-grow-1 d-flex flex-column mt-3">
+                        <div class="bars" id="bars"></div>
+                        <div class="mon" id="mon"></div>
+                        <div class="trfoot">
+                            <div>
+                                <b id="trInc"> ₹0.00 </b>
+                                Income (6 months)
+                            </div>
+                            <div>
+                                <b id="trExp"> ₹0.00</b>
+                                Expense (6 months)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ADD TRANSACTION -->
+            <div class="col-12 col-xl-4">
+                <div class="card form h-100 p-3">
+                    <h2 id="formTitle">
+                        Add Transaction
+                    </h2>
+                    <!-- Income / Expense Toggle -->
+                    <div class="toggle mb-2">
+                        <button type="button" id="bInc" class="btn on">
+                            Income
+                        </button>
+                        <button type="button" id="bExp" class="btn exp"> Expense</button>
+                    </div>
+                    <!-- Amount -->
+
+                    <div class="mb-2">
+
+                        <label class="form-label small text-secondary mb-1" for="amount">
+                            Amount (₹)
+                        </label>
+
+
+                        <input id="amount" type="number" step="0.01" inputmode="decimal" class="form-control"
+                            placeholder="Enter amount">
+
+
+                        <div class="invalid-feedback" id="eAmount"></div>
+
+                    </div>
+                    <!-- Category -->
+                    <div class="mb-2">
+                        <label class="form-label small text-secondary mb-1" for="category"> Category</label>
+                        <select id="category" class="form-select"></select>
+                        <div class="invalid-feedback" id="eCategory"></div>
+                    </div>
+                    <!-- Date -->
+                    <div class="mb-2">
+
+                        <label class="form-label small text-secondary mb-1" for="date">Date</label>
+                        <div class="input-group has-validation">
+                            <input id="date" type="date" class="form-control">
+                            <button type="button" class="btn btn-light border" id="calBtn" title="Open calendar">
+                                <i class="bi bi-calendar"></i>
+                            </button>
+                            <div class="invalid-feedback" id="eDate"></div>
+                        </div>
+                    </div>
+                    <!-- Description -->
+                    <div class="mb-3">
+                        <label class="form-label small text-secondary mb-1" for="desc"> Description</label>
+                        <input id="desc" type="text" maxlength="40" class="form-control"
+                            placeholder="Enter description">
+                        <div class="invalid-feedback" id="eDesc"></div>
+                    </div>
+                    <!-- Save -->
+                    <button class="btn btn-main w-100 py-2" id="save" type="button"> Add Transaction</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRANSACTIONS -->
+
+        <section class="card p-3" id="transactions">
+
+            <!-- Transaction Header -->
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+
+                <h2 class="m-0">Recent Transactions</h2>
+
+                <div class="d-flex gap-2 flex-wrap">
+
+                    <!-- Type Filter -->
+                    <select id="typeFilter" class="form-select" style="width:auto;">
+                        <option value="all">All Types</option>
+                        <option value="income">Income</option>
+                        <option value="expense">Expense</option>
+                    </select>
+
+                    <!-- Category Filter -->
+                    <select id="categoryFilter" class="form-select" style="width:auto;">
+                        <option value="all">All Categories</option>
+                        <option value="Food">Food</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Bills">Bills</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Others">Others</option>
+                    </select>
+
+                    <!-- Search -->
+                    <input type="text" class="form-control" style="width:260px" id="search"
+                        placeholder=" Search transactions...">
+
+                </div>
+
+            </div>
+
+            <!-- Transaction Table -->
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0" style="min-width:620px">
+
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="rows"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+        <!-- MODAL -->
+
+        <div class="modal fade" id="modal" tabindex="-1">
+
+            <div class="modal-dialog modal-dialog-centered">
+
+                <div class="modal-content p-3" id="mbox"></div>
+
+            </div>
+
+        </div>
+        <!-- TOASTS -->
+
+        <div class="position-fixed bottom-0 end-0 p-3" style="
+        z-index:2000;
+        padding-bottom:
+        calc(1rem + env(safe-area-inset-bottom,0px))
+    " id="toasts"></div>
+
+        <!-- Bootstrap JavaScript -->
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!--  JavaScript -->
+
+        <script src="script.js"></script>
+
+</body>
+
+</html>
